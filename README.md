@@ -35,7 +35,13 @@ npm test
 
 ## Deployment
 
-Every push to `main` builds a static export and deploys it through GitHub Actions to GitHub Pages.
+The source lives on `main`. The generated static website is published from the `gh-pages` branch so it can be served directly by GitHub Pages.
+
+Build the GitHub Pages version with:
+
+```bash
+GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/airplay-speaker-web npm run build:pages
+```
 
 The Android TV application source and APK releases are available in the [Sonic-Cast repository](https://github.com/l3kza08/Sonic-Cast).
 
