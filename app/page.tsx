@@ -1,34 +1,39 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import type { MouseEvent } from "react";
+
 const features = [
   {
     number: "01",
-    title: "เสียงใสระดับ CD",
-    body: "รับสัญญาณ ALAC แบบสเตอริโอ 16-bit / 44.1 kHz ให้รายละเอียดครบสำหรับการฟังเพลงในห้องนั่งเล่น",
+    title: "CD-quality clarity",
+    body: "Receive lossless ALAC stereo at 16-bit / 44.1 kHz, with every detail intact for the living room.",
     className: "feature-card feature-audio",
   },
   {
     number: "02",
-    title: "เนื้อเพลงที่มีชีวิต",
-    body: "ไฮไลต์คำต่อคำตามจังหวะ พร้อมบรรทัดนักร้องคนที่สองและเสียงประสานที่จัดวางอย่างเป็นธรรมชาติ",
+    title: "Lyrics that feel alive",
+    body: "Word-by-word karaoke timing, duet placement, backing vocals, and transitions that move with the song.",
     className: "feature-card feature-lyrics",
   },
   {
     number: "03",
-    title: "สีสันจากปกอัลบั้ม",
-    body: "พื้นหลังผสมสีและเบลอจากปกเพลงแบบเรียลไทม์ รองรับทั้งปกนิ่งและปกเคลื่อนไหว",
+    title: "Artwork in motion",
+    body: "Album-aware color fields blend behind both static and motion artwork without stealing the spotlight.",
     className: "feature-card feature-artwork",
   },
   {
     number: "04",
-    title: "สร้างมาเพื่อ Android TV",
-    body: "ตัวอักษร ระยะห่าง และการเคลื่อนไหวออกแบบสำหรับจอ 1920×1080 พร้อมปรับแต่งให้ลื่นบน RAM 2 GB",
+    title: "Made for the big screen",
+    body: "Type, spacing, and motion tuned for 1920×1080 displays—and optimized to stay fluid on 2 GB TV boxes.",
     className: "feature-card feature-tv",
   },
 ];
 
 const steps = [
-  ["01", "เปิด Airplay Speaker", "เปิดแอพบน Android TV แล้วรอที่หน้ารับสัญญาณ"],
-  ["02", "เลือกอุปกรณ์ AirPlay", "บน iPhone, iPad หรือ Mac เลือก Airplay Speaker จากเมนู AirPlay"],
-  ["03", "ปล่อยให้เพลงเติมเต็มจอ", "ปก สีพื้นหลัง และเนื้อเพลงจะปรากฏขึ้นโดยอัตโนมัติ"],
+  ["01", "Open Airplay Speaker", "Launch the app on Android TV and leave it on the calm listening screen."],
+  ["02", "Choose it in AirPlay", "From your iPhone, iPad, or Mac, select Airplay Speaker in the AirPlay menu."],
+  ["03", "Let the room come alive", "Artwork, ambient color, metadata, and lyrics appear automatically with the music."],
 ];
 
 function AirplayMark({ small = false }: { small?: boolean }) {
@@ -40,74 +45,161 @@ function AirplayMark({ small = false }: { small?: boolean }) {
   );
 }
 
+function Equalizer() {
+  return (
+    <span className="equalizer" aria-hidden="true">
+      <i /><i /><i /><i /><i />
+    </span>
+  );
+}
+
 export default function Home() {
+  const [connected, setConnected] = useState(false);
+  const [motionOn, setMotionOn] = useState(true);
+  const [lyricsMode, setLyricsMode] = useState<"karaoke" | "duet" | "break">("karaoke");
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const onPointer = (event: PointerEvent) => {
+      root.style.setProperty("--pointer-x", `${event.clientX}px`);
+      root.style.setProperty("--pointer-y", `${event.clientY}px`);
+    };
+    const onScroll = () => {
+      const distance = document.documentElement.scrollHeight - window.innerHeight;
+      root.style.setProperty("--scroll-progress", `${distance > 0 ? window.scrollY / distance : 0}`);
+      setScrolled(window.scrollY > 24);
+    };
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("is-visible")),
+      { threshold: 0.13 },
+    );
+    const revealNodes = document.querySelectorAll("[data-reveal]");
+    revealNodes.forEach((node) => observer.observe(node));
+    window.addEventListener("pointermove", onPointer, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener("pointermove", onPointer);
+      window.removeEventListener("scroll", onScroll);
+      observer.disconnect();
+    };
+  }, []);
+
+  const tilt = (event: MouseEvent<HTMLElement>, amount = 6) => {
+    const node = event.currentTarget;
+    const rect = node.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    node.style.setProperty("--tilt-x", `${(-y * amount).toFixed(2)}deg`);
+    node.style.setProperty("--tilt-y", `${(x * amount).toFixed(2)}deg`);
+  };
+
+  const resetTilt = (event: MouseEvent<HTMLElement>) => {
+    event.currentTarget.style.setProperty("--tilt-x", "0deg");
+    event.currentTarget.style.setProperty("--tilt-y", "0deg");
+  };
+
+  const spotlight = (event: MouseEvent<HTMLElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty("--card-x", `${event.clientX - rect.left}px`);
+    event.currentTarget.style.setProperty("--card-y", `${event.clientY - rect.top}px`);
+  };
+
   return (
     <main>
-      <nav className="site-nav" aria-label="เมนูหลัก">
-        <a className="brand" href="#top" aria-label="Airplay Speaker หน้าแรก">
+      <div className="scroll-progress" aria-hidden="true" />
+      <div className="pointer-glow" aria-hidden="true" />
+
+      <nav className={scrolled ? "site-nav is-scrolled" : "site-nav"} aria-label="Main navigation">
+        <a className="brand" href="#top" aria-label="Airplay Speaker home">
           <AirplayMark small />
           <span>Airplay Speaker</span>
         </a>
         <div className="nav-links">
-          <a href="#experience">ประสบการณ์</a>
-          <a href="#features">จุดเด่น</a>
-          <a href="#setup">เริ่มใช้งาน</a>
+          <a href="#experience">Experience</a>
+          <a href="#features">Details</a>
+          <a href="#lyrics">Lyrics Lab</a>
+          <a href="#setup">Set up</a>
         </div>
-        <a className="nav-cta" href="#demo">ชมเดโม <span aria-hidden="true">↘</span></a>
+        <a className="nav-cta magnetic" href="#demo">Watch the film <span aria-hidden="true">↘</span></a>
       </nav>
 
       <section className="hero" id="top">
+        <div className="hero-grid" aria-hidden="true" />
         <div className="hero-glow hero-glow-one" />
         <div className="hero-glow hero-glow-two" />
-        <div className="hero-copy reveal">
+        <div className="floating-note note-one" aria-hidden="true">♪</div>
+        <div className="floating-note note-two" aria-hidden="true">♫</div>
+
+        <div className="hero-copy hero-enter">
           <p className="eyebrow"><span /> AIRPLAY RECEIVER FOR ANDROID TV</p>
-          <h1>ให้ทุกเพลง<br />เต็มพื้นที่บนทีวี</h1>
+          <h1>Every song<br />deserves a <em>bigger</em> stage.</h1>
           <p className="hero-lead">
-            เปลี่ยน Android TV ให้เป็นลำโพง AirPlay ที่เสียงดีและน่ามอง
-            พร้อมปกเคลื่อนไหว สีพื้นหลังตามอัลบั้ม และเนื้อเพลงคาราโอเกะที่ไหลไปพร้อมเพลง
+            Turn your Android TV into a beautiful AirPlay speaker—with CD-quality audio,
+            living artwork, album-tinted ambience, and karaoke lyrics that move with every word.
           </p>
           <div className="hero-actions">
-            <a className="button button-primary" href="#demo">
-              <span className="play-icon" aria-hidden="true">▶</span> ชมวิดีโอ 15 วินาที
+            <a className="button button-primary magnetic" href="#demo">
+              <span className="play-icon" aria-hidden="true">▶</span> Watch the 15-second film
             </a>
-            <a className="button button-ghost" href="#setup">วิธีเริ่มใช้งาน <span aria-hidden="true">→</span></a>
+            <a className="button button-ghost magnetic" href="#lyrics">Try the Lyrics Lab <span aria-hidden="true">→</span></a>
           </div>
-          <ul className="hero-specs" aria-label="ข้อมูลสำคัญ">
+          <ul className="hero-specs" aria-label="Key specifications">
             <li><strong>16-bit</strong><span>ALAC Audio</span></li>
             <li><strong>44.1 kHz</strong><span>CD Quality</span></li>
             <li><strong>60 Hz</strong><span>Lyrics Motion</span></li>
           </ul>
         </div>
 
-        <div className="hero-object" aria-label="ตัวอย่างหน้าจอรอรับ AirPlay">
+        <button
+          className={connected ? "hero-object is-connected" : "hero-object"}
+          type="button"
+          onClick={() => setConnected((value) => !value)}
+          onMouseMove={(event) => tilt(event, 9)}
+          onMouseLeave={resetTilt}
+          aria-label={connected ? "Disconnect visual AirPlay demo" : "Connect visual AirPlay demo"}
+        >
           <div className="ambient-orbit orbit-one" />
           <div className="ambient-orbit orbit-two" />
+          <div className="signal-particle particle-one" />
+          <div className="signal-particle particle-two" />
+          <div className="signal-particle particle-three" />
           <div className="app-icon-shell">
             <div className="app-icon">
-              <AirplayMark />
+              {connected ? <Equalizer /> : <AirplayMark />}
             </div>
           </div>
-          <p className="listening"><span /> LISTENING FOR AIRPLAY</p>
-          <p className="device-name">Airplay Speaker</p>
-        </div>
+          <p className="listening"><span /> {connected ? "NOW PLAYING FROM IPHONE" : "LISTENING FOR AIRPLAY"}</p>
+          <p className="device-name">{connected ? "Midnight Drive · Nova Bloom" : "Airplay Speaker"}</p>
+          <span className="interaction-hint">{connected ? "Tap to reset" : "Tap to connect"}</span>
+        </button>
       </section>
 
-      <section className="ticker" aria-label="ความสามารถของแอพ">
+      <section className="ticker" aria-label="App capabilities">
         <div className="ticker-track">
           <span>CD QUALITY AUDIO</span><i>✦</i><span>WORD-BY-WORD LYRICS</span><i>✦</i>
           <span>MOTION ARTWORK</span><i>✦</i><span>BUILT FOR ANDROID TV</span><i>✦</i>
           <span aria-hidden="true">CD QUALITY AUDIO</span><i aria-hidden="true">✦</i><span aria-hidden="true">WORD-BY-WORD LYRICS</span><i aria-hidden="true">✦</i>
+          <span aria-hidden="true">MOTION ARTWORK</span><i aria-hidden="true">✦</i><span aria-hidden="true">BUILT FOR ANDROID TV</span><i aria-hidden="true">✦</i>
         </div>
       </section>
 
       <section className="experience section-shell" id="experience">
-        <div className="section-intro">
+        <div className="section-intro" data-reveal>
           <p className="eyebrow"><span /> NOW PLAYING, REIMAGINED</p>
-          <h2>เรียบง่ายเมื่อมองไกล<br />ละเอียดเมื่อมองใกล้</h2>
-          <p>ทุกองค์ประกอบจัดวางเพื่อจอทีวีจริง ให้เพลงเป็นจุดเด่นโดยไม่มีปุ่มควบคุมมารบกวนสายตา</p>
+          <h2>Quiet from across the room.<br />Rich when you look closer.</h2>
+          <p>Every element is composed for a real television, keeping music at the center without a wall of controls getting in the way.</p>
         </div>
 
-        <div className="tv-frame" id="demo">
+        <div
+          className="tv-frame tilt-surface"
+          id="demo"
+          data-reveal
+          onMouseMove={(event) => tilt(event, 2.2)}
+          onMouseLeave={resetTilt}
+        >
+          <div className="tv-shine" aria-hidden="true" />
           <div className="tv-topbar">
             <span className="tv-light" />
             <span>RECORDED ON ANDROID TV · 1080P</span>
@@ -126,20 +218,24 @@ export default function Home() {
             <source src="/media/airplay-speaker-demo.mp4" type="video/mp4" />
           </video>
         </div>
-        <p className="demo-note">ภาพบันทึกจากแอพจริง · วิดีโอไม่มีเสียง</p>
+        <div className="demo-caption" data-reveal>
+          <p>Captured from the real app · Video has no audio</p>
+          <span>Move your pointer across the screen</span>
+        </div>
       </section>
 
       <section className="features section-shell" id="features">
-        <div className="section-heading-row">
+        <div className="section-heading-row" data-reveal>
           <div>
             <p className="eyebrow"><span /> CRAFTED FOR MUSIC</p>
-            <h2>เสียง ภาพ และคำร้อง<br />ทำงานเป็นหนึ่งเดียว</h2>
+            <h2>Sound, color, and lyrics.<br />One continuous experience.</h2>
           </div>
-          <p>ฟีเจอร์ที่สำคัญถูกออกแบบให้ทำงานเบา รวดเร็ว และต่อเนื่อง แม้บนกล่องทีวีที่มีทรัพยากรจำกัด</p>
+          <p>Everything important is designed to feel fast, calm, and effortless—even on resource-limited TV hardware.</p>
         </div>
         <div className="feature-grid">
           {features.map((feature) => (
-            <article className={feature.className} key={feature.number}>
+            <article className={`${feature.className} spotlight-card`} key={feature.number} data-reveal onMouseMove={spotlight}>
+              <div className="card-spotlight" aria-hidden="true" />
               <span className="feature-number">{feature.number}</span>
               {feature.number === "01" && (
                 <div className="wave-art" aria-hidden="true">
@@ -154,7 +250,12 @@ export default function Home() {
                 </div>
               )}
               {feature.number === "03" && (
-                <div className="color-orbs" aria-hidden="true"><i /><i /><i /></div>
+                <>
+                  <div className={motionOn ? "color-orbs" : "color-orbs is-paused"} aria-hidden="true"><i /><i /><i /></div>
+                  <button className="motion-toggle" type="button" onClick={() => setMotionOn((value) => !value)} aria-pressed={motionOn}>
+                    <span>{motionOn ? "Motion on" : "Motion off"}</span><i />
+                  </button>
+                </>
               )}
               {feature.number === "04" && (
                 <div className="screen-spec" aria-hidden="true">
@@ -171,56 +272,87 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="lyrics-showcase">
+      <section className="lyrics-showcase" id="lyrics">
         <div className="lyrics-backdrop" />
-        <div className="lyrics-meta">
-          <p className="eyebrow light"><span /> LYRICS IN MOTION</p>
-          <h2>ไม่ได้แค่อ่าน<br />แต่รู้สึกไปพร้อมเพลง</h2>
-          <p>การไฮไลต์เดินตามคำอย่างลื่นไหล มีแสงออร่าอย่างพอดี และหยุดพร้อมเพลงทันทีเมื่อกดพัก</p>
-        </div>
-        <div className="lyrics-stage" aria-label="ตัวอย่างเนื้อเพลงแบบซิงก์">
-          <p className="lyric-muted lyric-left">You can hear it in the silence</p>
-          <div className="lyric-active lyric-left">
-            <small>(come a little closer)</small>
-            <p>Let the <span>music</span> find you</p>
+        <div className="lyrics-meta" data-reveal>
+          <p className="eyebrow light"><span /> INTERACTIVE LYRICS LAB</p>
+          <h2>Don&apos;t just read it.<br />Feel the line arrive.</h2>
+          <p>Switch between lyric behaviors to preview the glow, singer placement, and breathing break indicator used on TV.</p>
+          <div className="mode-switcher" role="group" aria-label="Lyrics preview mode">
+            {(["karaoke", "duet", "break"] as const).map((mode) => (
+              <button key={mode} type="button" className={lyricsMode === mode ? "is-active" : ""} onClick={() => setLyricsMode(mode)}>
+                {mode === "break" ? "Instrumental" : mode.charAt(0).toUpperCase() + mode.slice(1)}
+              </button>
+            ))}
           </div>
-          <p className="lyric-next lyric-right">I&apos;ll meet you in the light</p>
-          <div className="break-dots" aria-label="ช่วงดนตรี"><i /><i /><i /></div>
+        </div>
+
+        <div className={`lyrics-stage mode-${lyricsMode}`} aria-live="polite" data-reveal>
+          <div className="stage-label"><Equalizer /><span>LIVE PREVIEW · 60 HZ</span></div>
+          {lyricsMode === "karaoke" && (
+            <div className="lyrics-scene karaoke-scene">
+              <p className="lyric-muted lyric-left">You can hear it in the silence</p>
+              <div className="lyric-active lyric-left">
+                <small>(come a little closer)</small>
+                <p className="karaoke-line"><span>Let</span> <span>the</span> <span>music</span> <span>find</span> <span>you</span></p>
+              </div>
+              <p className="lyric-next lyric-right">I&apos;ll meet you in the light</p>
+            </div>
+          )}
+          {lyricsMode === "duet" && (
+            <div className="lyrics-scene duet-scene">
+              <div className="singer-tag">VOICE A</div>
+              <p className="duet-left">Hold on to the feeling</p>
+              <div className="singer-tag tag-right">VOICE B</div>
+              <p className="duet-right">I can see it in your eyes</p>
+              <p className="duet-left duet-current">We&apos;ll find our way tonight</p>
+            </div>
+          )}
+          {lyricsMode === "break" && (
+            <div className="lyrics-scene break-scene">
+              <p>Instrumental break</p>
+              <div className="break-dots" aria-label="Music break"><i /><i /><i /></div>
+              <small>Each light rises as the next lyric approaches</small>
+            </div>
+          )}
+          <div className="fake-progress"><i /></div>
         </div>
       </section>
 
       <section className="setup section-shell" id="setup">
-        <div className="section-heading-row setup-heading">
+        <div className="section-heading-row setup-heading" data-reveal>
           <div>
             <p className="eyebrow"><span /> SIMPLE BY DESIGN</p>
-            <h2>สามขั้นตอน<br />แล้วปล่อยเพลงเล่น</h2>
+            <h2>Three steps.<br />Then let it play.</h2>
           </div>
           <div className="compatibility">
-            <span>รองรับ</span>
+            <span>Compatibility</span>
             <strong>Android TV 7.0+</strong>
-            <small>อุปกรณ์ส่งและทีวีต้องอยู่ในเครือข่ายเดียวกัน</small>
+            <small>Your sender and TV need to be on the same local network.</small>
           </div>
         </div>
 
         <div className="steps">
           {steps.map(([number, title, body]) => (
-            <article className="step" key={number}>
+            <article className="step" key={number} data-reveal>
               <span>{number}</span>
               <h3>{title}</h3>
               <p>{body}</p>
+              <i aria-hidden="true">↗</i>
             </article>
           ))}
         </div>
 
-        <div className="closing-card">
+        <div className="closing-card tilt-surface" data-reveal onMouseMove={(event) => tilt(event, 2.4)} onMouseLeave={resetTilt}>
           <div className="closing-glow" />
+          <div className="closing-rings" aria-hidden="true"><i /><i /><i /></div>
           <AirplayMark />
           <p className="eyebrow light"><span /> READY WHEN YOU ARE</p>
-          <h2>ทีวีเครื่องเดิม<br />ประสบการณ์ฟังเพลงแบบใหม่</h2>
-          <p>เปิดแอพ เลือก AirPlay แล้วให้ทุกเพลงเติมเต็มห้องนั่งเล่นของคุณ</p>
+          <h2>The TV you already own.<br />A completely new way to listen.</h2>
+          <p>Open the app, choose AirPlay, and let every song fill the room.</p>
           <div className="closing-actions">
-            <a className="button button-light" href="#demo"><span className="play-icon" aria-hidden="true">▶</span> ชมเดโมอีกครั้ง</a>
-            <a className="text-link" href="https://github.com/jqssun/android-airplay-server" target="_blank" rel="noreferrer">ดูโครงการต้นฉบับ <span aria-hidden="true">↗</span></a>
+            <a className="button button-light magnetic" href="#demo"><span className="play-icon" aria-hidden="true">▶</span> Replay the film</a>
+            <a className="text-link" href="https://github.com/jqssun/android-airplay-server" target="_blank" rel="noreferrer">Explore the original project <span aria-hidden="true">↗</span></a>
           </div>
         </div>
       </section>
@@ -230,8 +362,8 @@ export default function Home() {
           <AirplayMark small />
           <span>Airplay Speaker</span>
         </a>
-        <p>AirPlay music receiver สำหรับ Android TV</p>
-        <p className="legal">โปรเจกต์โอเพนซอร์สภายใต้ GPL-3.0 · ไม่มีความเกี่ยวข้องหรือได้รับการรับรองจาก Apple Inc.</p>
+        <p>AirPlay music receiver for Android TV</p>
+        <p className="legal">Open source under GPL-3.0 · Not affiliated with or endorsed by Apple Inc.</p>
       </footer>
     </main>
   );
