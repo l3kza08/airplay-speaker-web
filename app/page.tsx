@@ -36,6 +36,33 @@ const steps = [
   ["03", "Let the room come alive", "Artwork, ambient color, metadata, and lyrics appear automatically with the music."],
 ];
 
+const previewTracks = [
+  {
+    title: "Midnight Drive",
+    artist: "Nova Bloom",
+    album: "Neon Afterglow",
+    aside: "(don’t let the moment go)",
+    line: ["We", "could", "stay", "inside", "this", "light"],
+    next: "Until the city wakes again",
+  },
+  {
+    title: "Everything We Never Said Before the Morning Came",
+    artist: "The Paper Moons",
+    album: "Quiet Signals",
+    aside: "(say it one more time)",
+    line: ["Every", "word", "comes", "back", "to", "you"],
+    next: "I hear it moving through the room",
+  },
+  {
+    title: "Velvet Satellite",
+    artist: "Low Summer",
+    album: "Out of Orbit",
+    aside: "(floating out of view)",
+    line: ["Meet", "me", "where", "the", "sky", "turns", "blue"],
+    next: "We can leave the noise behind",
+  },
+];
+
 function AirplayMark({ small = false }: { small?: boolean }) {
   return (
     <span className={small ? "airplay-mark small" : "airplay-mark"} aria-hidden="true">
@@ -57,7 +84,17 @@ export default function Home() {
   const [connected, setConnected] = useState(false);
   const [motionOn, setMotionOn] = useState(true);
   const [lyricsMode, setLyricsMode] = useState<"karaoke" | "duet" | "break">("karaoke");
+  const [appPreviewMode, setAppPreviewMode] = useState<"waiting" | "playing">("playing");
+  const [appPreviewPlaying, setAppPreviewPlaying] = useState(true);
+  const [previewTrackIndex, setPreviewTrackIndex] = useState(0);
   const [scrolled, setScrolled] = useState(false);
+
+  const previewTrack = previewTracks[previewTrackIndex];
+  const changePreviewTrack = (direction: number) => {
+    setPreviewTrackIndex((index) => (index + direction + previewTracks.length) % previewTracks.length);
+    setAppPreviewMode("playing");
+    setAppPreviewPlaying(true);
+  };
 
   useEffect(() => {
     const root = document.documentElement;
@@ -117,9 +154,9 @@ export default function Home() {
           <span>Airplay Speaker</span>
         </a>
         <div className="nav-links">
-          <a href="#experience">Experience</a>
+          <a href="#live-app">Live app</a>
+          <a href="#experience">Film</a>
           <a href="#features">Details</a>
-          <a href="#lyrics">Lyrics Lab</a>
           <a href="#setup">Set up</a>
         </div>
         <a className="nav-cta magnetic" href="#demo">Watch the film <span aria-hidden="true">↘</span></a>
@@ -183,6 +220,93 @@ export default function Home() {
           <span aria-hidden="true">CD QUALITY AUDIO</span><i aria-hidden="true">✦</i><span aria-hidden="true">WORD-BY-WORD LYRICS</span><i aria-hidden="true">✦</i>
           <span aria-hidden="true">MOTION ARTWORK</span><i aria-hidden="true">✦</i><span aria-hidden="true">BUILT FOR ANDROID TV</span><i aria-hidden="true">✦</i>
         </div>
+      </section>
+
+      <section className="app-embed section-shell" id="live-app">
+        <div className="app-embed-heading" data-reveal>
+          <div>
+            <p className="eyebrow"><span /> THE APP, INSIDE THE SITE</p>
+            <h2>Try the living-room<br />experience right here.</h2>
+          </div>
+          <div className="app-view-switcher" role="group" aria-label="App screen preview">
+            <button type="button" className={appPreviewMode === "playing" ? "is-active" : ""} onClick={() => setAppPreviewMode("playing")}>Now Playing</button>
+            <button type="button" className={appPreviewMode === "waiting" ? "is-active" : ""} onClick={() => setAppPreviewMode("waiting")}>Waiting Screen</button>
+          </div>
+        </div>
+
+        <div className="embedded-tv-wrap" data-reveal>
+          <div className="embedded-tv-bezel">
+            <div className={`embedded-app track-theme-${previewTrackIndex} ${appPreviewPlaying ? "is-playing" : "is-paused"}`}>
+              <div className="app-color-field field-a" />
+              <div className="app-color-field field-b" />
+              <div className="app-color-field field-c" />
+              <div className="app-noise" />
+
+              {appPreviewMode === "waiting" ? (
+                <div className="embedded-waiting">
+                  <div className="waiting-logo"><AirplayMark /></div>
+                  <p><i /> LISTENING FOR AIRPLAY</p>
+                  <strong>Airplay Speaker</strong>
+                  <small>Choose this TV from the AirPlay menu on your device</small>
+                </div>
+              ) : (
+                <div className="embedded-now-playing">
+                  <div className="embedded-album-side">
+                    <div className="embedded-cover" aria-label="Original abstract album artwork">
+                      <div className="cover-sun" />
+                      <div className="cover-horizon horizon-one" />
+                      <div className="cover-horizon horizon-two" />
+                      <div className="cover-grain" />
+                    </div>
+                    <div className="embedded-meta">
+                      <div className="embedded-title-row">
+                        <Equalizer />
+                        <div className={previewTrack.title.length > 25 ? "meta-marquee is-long" : "meta-marquee"}><strong>{previewTrack.title}</strong></div>
+                      </div>
+                      <span>{previewTrack.artist}</span>
+                      <small>{previewTrack.album}</small>
+                    </div>
+                  </div>
+
+                  <div className="embedded-lyrics-side">
+                    <div className="embedded-lyric-current">
+                      <small>{previewTrack.aside}</small>
+                      <p>{previewTrack.line.map((word, index) => <span key={`${word}-${index}`}>{word}{index < previewTrack.line.length - 1 ? " " : ""}</span>)}</p>
+                    </div>
+                    <p className="embedded-lyric-next">{previewTrack.next}</p>
+                    <div className="embedded-music-break" aria-hidden="true"><i /><i /><i /></div>
+                  </div>
+
+                  <div className="embedded-progress">
+                    <span>1:28</span><div><i /></div><span>−2:46</span>
+                  </div>
+                </div>
+              )}
+
+              <div className="browser-preview-label"><span /> INTERACTIVE WEB PREVIEW</div>
+            </div>
+            <div className="tv-chin"><i /><span>AIRPLAY SPEAKER</span></div>
+          </div>
+
+          <aside className="preview-remote" aria-label="Preview remote control">
+            <div className="remote-copy">
+              <span>WEB REMOTE</span>
+              <p>Use these controls to explore the embedded app preview.</p>
+            </div>
+            <div className="remote-controls">
+              <button type="button" onClick={() => changePreviewTrack(-1)} aria-label="Previous preview track">‹</button>
+              <button className="remote-play" type="button" onClick={() => { setAppPreviewMode("playing"); setAppPreviewPlaying((value) => !value); }} aria-label={appPreviewPlaying ? "Pause preview" : "Play preview"}>
+                {appPreviewPlaying ? "Ⅱ" : "▶"}
+              </button>
+              <button type="button" onClick={() => changePreviewTrack(1)} aria-label="Next preview track">›</button>
+            </div>
+            <div className="remote-status">
+              <i className={appPreviewPlaying && appPreviewMode === "playing" ? "is-live" : ""} />
+              {appPreviewMode === "waiting" ? "Waiting for AirPlay" : appPreviewPlaying ? "Preview playing" : "Preview paused"}
+            </div>
+          </aside>
+        </div>
+        <p className="app-embed-note" data-reveal>This interactive recreation mirrors the app&apos;s TV layout. The film below shows the real Android TV build.</p>
       </section>
 
       <section className="experience section-shell" id="experience">

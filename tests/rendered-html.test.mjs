@@ -17,6 +17,7 @@ test("renders the Airplay Speaker landing page", async () => {
   assert.match(html, /<title>Airplay Speaker/);
   assert.match(html, /Every song/);
   assert.match(html, /Interactive Lyrics Lab/i);
+  assert.match(html, /THE APP, INSIDE THE SITE/);
   assert.match(html, /airplay-speaker-demo\.mp4/);
   assert.match(html, /CD Quality/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/);
