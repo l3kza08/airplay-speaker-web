@@ -7,8 +7,13 @@ const geist = Geist({
   subsets: ["latin"],
 });
 
+const siteBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const siteUrl = siteBasePath
+  ? `https://l3kza08.github.io${siteBasePath}`
+  : "https://airplay-speaker-tv-0722.worapornkummarn.chatgpt.site";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://airplay-speaker-tv-0722.worapornkummarn.chatgpt.site"),
+  metadataBase: new URL(siteUrl),
   title: "Airplay Speaker — AirPlay Receiver for Android TV",
   description:
     "Turn your Android TV into a beautiful AirPlay speaker with CD-quality audio, motion artwork, and word-by-word lyrics.",
@@ -17,13 +22,13 @@ export const metadata: Metadata = {
     description: "Every song deserves a bigger stage.",
     type: "website",
     locale: "en_US",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Airplay Speaker on Android TV" }],
+    images: [{ url: `${siteBasePath}/og.png`, width: 1200, height: 630, alt: "Airplay Speaker on Android TV" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Airplay Speaker",
     description: "Every song deserves a bigger stage.",
-    images: ["/og.png"],
+    images: [`${siteBasePath}/og.png`],
   },
 };
 

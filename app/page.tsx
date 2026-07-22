@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import type { MouseEvent } from "react";
+import Link from "next/link";
+
+const siteBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const features = [
   {
@@ -159,7 +162,7 @@ export default function Home() {
           <a href="#features">Details</a>
           <a href="#setup">Set up</a>
         </div>
-        <a className="nav-cta magnetic" href="/download">Download <span aria-hidden="true">↓</span></a>
+        <Link className="nav-cta magnetic" href="/download">Download <span aria-hidden="true">↓</span></Link>
       </nav>
 
       <section className="hero" id="top">
@@ -337,9 +340,9 @@ export default function Home() {
             playsInline
             controls
             preload="metadata"
-            poster="/media/airplay-speaker-demo-poster.jpg"
+            poster={`${siteBasePath}/media/airplay-speaker-demo-poster.jpg`}
           >
-            <source src="/media/airplay-speaker-demo.mp4" type="video/mp4" />
+            <source src={`${siteBasePath}/media/airplay-speaker-demo.mp4`} type="video/mp4" />
           </video>
         </div>
         <div className="demo-caption" data-reveal>
@@ -475,7 +478,7 @@ export default function Home() {
           <h2>The TV you already own.<br />A completely new way to listen.</h2>
           <p>Open the app, choose AirPlay, and let every song fill the room.</p>
           <div className="closing-actions">
-            <a className="button button-light magnetic" href="/download"><span aria-hidden="true">↓</span> Download for Android TV</a>
+            <Link className="button button-light magnetic" href="/download"><span aria-hidden="true">↓</span> Download for Android TV</Link>
             <a className="text-link" href="#demo">Replay the film <span aria-hidden="true">↗</span></a>
           </div>
         </div>
@@ -487,7 +490,7 @@ export default function Home() {
           <span>Airplay Speaker</span>
         </a>
         <p>AirPlay music receiver for Android TV</p>
-        <p className="legal"><a href="/download">Download v0.14.8</a> · Open source under GPL-3.0 · Not affiliated with or endorsed by Apple Inc.</p>
+        <p className="legal"><Link href="/download">Download v0.14.8</Link> · Open source under GPL-3.0 · Not affiliated with or endorsed by Apple Inc.</p>
       </footer>
     </main>
   );
