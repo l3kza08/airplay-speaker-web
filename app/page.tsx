@@ -329,7 +329,7 @@ export default function Home() {
           <div className="tv-shine" aria-hidden="true" />
           <div className="tv-topbar">
             <span className="tv-light" />
-            <span>RECORDED ON ANDROID TV · 1080P</span>
+            <span>RECORDED ON ANDROID TV · v0.14.8 · 1080P</span>
             <span className="tv-time">00:15</span>
           </div>
           <video
@@ -346,7 +346,7 @@ export default function Home() {
           </video>
         </div>
         <div className="demo-caption" data-reveal>
-          <p>Captured from the real app · Video has no audio</p>
+          <p>Captured from Airplay Speaker v0.14.8 · Video has no audio</p>
           <span>Move your pointer across the screen</span>
         </div>
       </section>
