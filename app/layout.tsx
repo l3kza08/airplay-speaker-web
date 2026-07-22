@@ -8,7 +8,7 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://airplay-speaker-tv-0722.sites.openai.com"),
+  metadataBase: new URL("https://airplay-speaker-tv-0722.worapornkummarn.chatgpt.site"),
   title: "Airplay Speaker — AirPlay Receiver for Android TV",
   description:
     "เปลี่ยน Android TV ให้เป็นลำโพง AirPlay พร้อมเสียงระดับ CD Quality ปกเคลื่อนไหว และเนื้อเพลงแบบคำต่อคำ",
