@@ -159,7 +159,7 @@ export default function Home() {
           <a href="#features">Details</a>
           <a href="#setup">Set up</a>
         </div>
-        <a className="nav-cta magnetic" href="#demo">Watch the film <span aria-hidden="true">↘</span></a>
+        <a className="nav-cta magnetic" href="/download">Download <span aria-hidden="true">↓</span></a>
       </nav>
 
       <section className="hero" id="top">
@@ -475,8 +475,8 @@ export default function Home() {
           <h2>The TV you already own.<br />A completely new way to listen.</h2>
           <p>Open the app, choose AirPlay, and let every song fill the room.</p>
           <div className="closing-actions">
-            <a className="button button-light magnetic" href="#demo"><span className="play-icon" aria-hidden="true">▶</span> Replay the film</a>
-            <a className="text-link" href="https://github.com/jqssun/android-airplay-server" target="_blank" rel="noreferrer">Explore the original project <span aria-hidden="true">↗</span></a>
+            <a className="button button-light magnetic" href="/download"><span aria-hidden="true">↓</span> Download for Android TV</a>
+            <a className="text-link" href="#demo">Replay the film <span aria-hidden="true">↗</span></a>
           </div>
         </div>
       </section>
@@ -487,7 +487,7 @@ export default function Home() {
           <span>Airplay Speaker</span>
         </a>
         <p>AirPlay music receiver for Android TV</p>
-        <p className="legal">Open source under GPL-3.0 · Not affiliated with or endorsed by Apple Inc.</p>
+        <p className="legal"><a href="/download">Download v0.14.8</a> · Open source under GPL-3.0 · Not affiliated with or endorsed by Apple Inc.</p>
       </footer>
     </main>
   );
