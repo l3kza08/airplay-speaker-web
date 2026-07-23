@@ -22,13 +22,13 @@ export const metadata: Metadata = {
     description: "Every song deserves a bigger stage.",
     type: "website",
     locale: "en_US",
-    images: [{ url: `${siteBasePath}/og.png`, width: 1200, height: 630, alt: "Airplay Speaker on Android TV" }],
+    images: [{ url: `${siteBasePath}/og-live-demo.png`, width: 1200, height: 630, alt: "Airplay Speaker multi-song Live Demo on Android TV" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Airplay Speaker",
     description: "Every song deserves a bigger stage.",
-    images: [`${siteBasePath}/og.png`],
+    images: [`${siteBasePath}/og-live-demo.png`],
   },
 };
 
