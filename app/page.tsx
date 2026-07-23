@@ -44,27 +44,58 @@ const previewTracks = [
     title: "Midnight Drive",
     artist: "Nova Bloom",
     album: "Neon Afterglow",
+    view: "karaoke",
+    viewLabel: "Karaoke lyrics",
     aside: "(don’t let the moment go)",
     line: ["We", "could", "stay", "inside", "this", "light"],
     next: "Until the city wakes again",
+    extra: ["Streetlights drift across the glass", "Every mile becomes a memory", "Stay until the morning comes"],
   },
   {
     title: "Everything We Never Said Before the Morning Came",
     artist: "The Paper Moons",
     album: "Quiet Signals",
+    view: "duet",
+    viewLabel: "Duet vocals",
     aside: "(say it one more time)",
     line: ["Every", "word", "comes", "back", "to", "you"],
     next: "I hear it moving through the room",
+    extra: ["VOICE A · Every word comes back to you", "VOICE B · I kept the light on by the door", "TOGETHER · We finally say it out loud"],
   },
   {
     title: "Velvet Satellite",
     artist: "Low Summer",
     album: "Out of Orbit",
+    view: "instrumental",
+    viewLabel: "Instrumental break",
     aside: "(floating out of view)",
     line: ["Meet", "me", "where", "the", "sky", "turns", "blue"],
     next: "We can leave the noise behind",
+    extra: ["The signal disappears", "A quiet orbit passes overhead", "We can leave the noise behind"],
   },
-];
+  {
+    title: "After the Rain",
+    artist: "Mira Lane",
+    album: "Open Windows",
+    view: "queue",
+    viewLabel: "Up Next queue",
+    aside: "(the clouds are moving on)",
+    line: ["Color", "returns", "to", "every", "street"],
+    next: "Play the song we saved for later",
+    extra: ["Previous", "Now playing", "Up next"],
+  },
+  {
+    title: "Paper Constellations",
+    artist: "North Arcade",
+    album: "Handwritten Skies",
+    view: "plain",
+    viewLabel: "Full text lyrics",
+    aside: "Lyrics without timing",
+    line: ["Fold", "the", "night", "into", "a", "map"],
+    next: "And trace the stars that brought us home",
+    extra: ["Fold the night into a map", "Leave a light beside the window", "Trace the stars that brought us home", "Keep the quiet close until the morning"],
+  },
+] as const;
 
 function AirplayMark({ small = false }: { small?: boolean }) {
   return (
@@ -93,8 +124,15 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
 
   const previewTrack = previewTracks[previewTrackIndex];
+  const previousPreviewTrack = previewTracks[(previewTrackIndex - 1 + previewTracks.length) % previewTracks.length];
+  const nextPreviewTrack = previewTracks[(previewTrackIndex + 1) % previewTracks.length];
   const changePreviewTrack = (direction: number) => {
     setPreviewTrackIndex((index) => (index + direction + previewTracks.length) % previewTracks.length);
+    setAppPreviewMode("playing");
+    setAppPreviewPlaying(true);
+  };
+  const selectPreviewTrack = (index: number) => {
+    setPreviewTrackIndex(index);
     setAppPreviewMode("playing");
     setAppPreviewPlaying(true);
   };
@@ -239,7 +277,15 @@ export default function Home() {
 
         <div className="embedded-tv-wrap" data-reveal>
           <div className="embedded-tv-bezel">
-            <div className={`embedded-app track-theme-${previewTrackIndex} ${appPreviewPlaying ? "is-playing" : "is-paused"}`}>
+            <div
+              className={`embedded-app track-theme-${previewTrackIndex} ${appPreviewPlaying ? "is-playing" : "is-paused"}`}
+              tabIndex={0}
+              onKeyDown={(event) => {
+                if (event.key === "ArrowLeft") changePreviewTrack(-1);
+                if (event.key === "ArrowRight") changePreviewTrack(1);
+              }}
+              aria-label={`${previewTrack.title} by ${previewTrack.artist}. ${previewTrack.viewLabel}. Use Left and Right Arrow keys to change songs.`}
+            >
               <div className="app-color-field field-a" />
               <div className="app-color-field field-b" />
               <div className="app-color-field field-c" />
@@ -253,36 +299,86 @@ export default function Home() {
                   <small>Choose this TV from the AirPlay menu on your device</small>
                 </div>
               ) : (
-                <div className="embedded-now-playing">
-                  <div className="embedded-album-side">
-                    <div className="embedded-cover" aria-label="Original abstract album artwork">
-                      <div className="cover-sun" />
-                      <div className="cover-horizon horizon-one" />
-                      <div className="cover-horizon horizon-two" />
-                      <div className="cover-grain" />
-                    </div>
-                    <div className="embedded-meta">
-                      <div className="embedded-title-row">
-                        <Equalizer />
-                        <div className={previewTrack.title.length > 25 ? "meta-marquee is-long" : "meta-marquee"}><strong>{previewTrack.title}</strong></div>
+                <div className={`embedded-now-playing view-${previewTrack.view}`} key={`${previewTrackIndex}-${previewTrack.view}`} aria-live="polite">
+                  {previewTrack.view === "queue" ? (
+                    <div className="embedded-queue-view">
+                      <p className="queue-eyebrow">NOW PLAYING</p>
+                      <div className="embedded-queue-rail">
+                        {[previousPreviewTrack, previewTrack, nextPreviewTrack].map((track, index) => {
+                          const queueIndex = index === 0
+                            ? (previewTrackIndex - 1 + previewTracks.length) % previewTracks.length
+                            : index === 1
+                              ? previewTrackIndex
+                              : (previewTrackIndex + 1) % previewTracks.length;
+                          return (
+                            <div className={`queue-card track-theme-${queueIndex} ${index === 1 ? "is-current" : ""}`} key={`${track.title}-${index}`}>
+                              <div className="queue-cover" aria-hidden="true"><i /><i /><i /></div>
+                              <strong>{track.title}</strong>
+                              <span>{track.artist}</span>
+                              <small>{index === 0 ? "PREVIOUS" : index === 1 ? "NOW PLAYING" : "UP NEXT"}</small>
+                            </div>
+                          );
+                        })}
                       </div>
-                      <span>{previewTrack.artist}</span>
-                      <small>{previewTrack.album}</small>
+                      <p className="queue-help">Use ← → to browse the queue</p>
                     </div>
-                  </div>
+                  ) : (
+                    <>
+                      <div className="embedded-album-side">
+                        <div className={`embedded-cover cover-art-${previewTrackIndex}`} aria-label="Original abstract album artwork">
+                          <div className="cover-sun" />
+                          <div className="cover-horizon horizon-one" />
+                          <div className="cover-horizon horizon-two" />
+                          <div className="cover-grain" />
+                        </div>
+                        <div className="embedded-meta">
+                          <div className="embedded-title-row">
+                            <Equalizer />
+                            <div className={previewTrack.title.length > 25 ? "meta-marquee is-long" : "meta-marquee"}><strong>{previewTrack.title}</strong></div>
+                          </div>
+                          <span>{previewTrack.artist}</span>
+                          <small>{previewTrack.album}</small>
+                        </div>
+                      </div>
 
-                  <div className="embedded-lyrics-side">
-                    <div className="embedded-lyric-current">
-                      <small>{previewTrack.aside}</small>
-                      <p>{previewTrack.line.map((word, index) => <span key={`${word}-${index}`}>{word}{index < previewTrack.line.length - 1 ? " " : ""}</span>)}</p>
-                    </div>
-                    <p className="embedded-lyric-next">{previewTrack.next}</p>
-                    <div className="embedded-music-break" aria-hidden="true"><i /><i /><i /></div>
-                  </div>
+                      {previewTrack.view === "karaoke" && (
+                        <div className="embedded-lyrics-side">
+                          <div className="embedded-lyric-current">
+                            <small>{previewTrack.aside}</small>
+                            <p>{previewTrack.line.map((word, index) => <span key={`${word}-${index}`}>{word}{index < previewTrack.line.length - 1 ? " " : ""}</span>)}</p>
+                          </div>
+                          <p className="embedded-lyric-next">{previewTrack.next}</p>
+                        </div>
+                      )}
 
-                  <div className="embedded-progress">
-                    <span>1:28</span><div><i /></div><span>−2:46</span>
-                  </div>
+                      {previewTrack.view === "duet" && (
+                        <div className="embedded-lyrics-side embedded-duet-view">
+                          <div className="duet-line duet-a"><small>VOICE A</small><p>Every word comes back to you</p></div>
+                          <div className="duet-line duet-b"><small>VOICE B</small><p>I kept the light on by the door</p></div>
+                          <div className="duet-line duet-together"><small>TOGETHER</small><p>We finally say it out loud</p></div>
+                        </div>
+                      )}
+
+                      {previewTrack.view === "instrumental" && (
+                        <div className="embedded-lyrics-side embedded-break-view">
+                          <small>INSTRUMENTAL</small>
+                          <div className="embedded-music-break" aria-label="Instrumental break"><i /><i /><i /></div>
+                          <p>{previewTrack.next}</p>
+                        </div>
+                      )}
+
+                      {previewTrack.view === "plain" && (
+                        <div className="embedded-lyrics-side embedded-plain-view">
+                          <small>FULL LYRICS · NO TIMING AVAILABLE</small>
+                          <div>{previewTrack.extra.map((line) => <p key={line}>{line}</p>)}</div>
+                        </div>
+                      )}
+
+                      <div className="embedded-progress">
+                        <span>1:28</span><div><i /></div><span>−2:46</span>
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
 
@@ -294,7 +390,21 @@ export default function Home() {
           <aside className="preview-remote" aria-label="Preview remote control">
             <div className="remote-copy">
               <span>WEB REMOTE</span>
-              <p>Use these controls to explore the embedded app preview.</p>
+              <p>Choose a song to open a different app screen.</p>
+            </div>
+            <div className="preview-track-list" aria-label="Choose a demo song">
+              {previewTracks.map((track, index) => (
+                <button
+                  type="button"
+                  className={appPreviewMode === "playing" && previewTrackIndex === index ? "is-active" : ""}
+                  onClick={() => selectPreviewTrack(index)}
+                  aria-pressed={appPreviewMode === "playing" && previewTrackIndex === index}
+                  key={track.title}
+                >
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <div><strong>{track.title}</strong><small>{track.viewLabel}</small></div>
+                </button>
+              ))}
             </div>
             <div className="remote-controls">
               <button type="button" onClick={() => changePreviewTrack(-1)} aria-label="Previous preview track">‹</button>
@@ -305,7 +415,7 @@ export default function Home() {
             </div>
             <div className="remote-status">
               <i className={appPreviewPlaying && appPreviewMode === "playing" ? "is-live" : ""} />
-              {appPreviewMode === "waiting" ? "Waiting for AirPlay" : appPreviewPlaying ? "Preview playing" : "Preview paused"}
+              {appPreviewMode === "waiting" ? "Waiting for AirPlay" : `${previewTrackIndex + 1}/${previewTracks.length} · ${appPreviewPlaying ? previewTrack.viewLabel : "Preview paused"}`}
             </div>
           </aside>
         </div>

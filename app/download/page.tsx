@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Download Airplay Speaker",
     description: "AirPlay music receiver for Android TV. Download the latest APK.",
-    images: [{ url: `${siteBasePath}/og.png`, width: 1200, height: 630, alt: "Airplay Speaker on Android TV" }],
+    images: [{ url: `${siteBasePath}/og-live-demo.png`, width: 1200, height: 630, alt: "Airplay Speaker multi-song Live Demo on Android TV" }],
   },
 };
 
