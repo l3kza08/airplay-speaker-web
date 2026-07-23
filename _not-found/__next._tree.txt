@@ -1,2 +1,2 @@
-:HL["/airplay-speaker-web/_next/static/chunks/0k.p19yav3pvw.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"rola429pNUWCJOK7Q4EaI"}
+:HL["/airplay-speaker-web/_next/static/chunks/0jlee4p_.orl~.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"Xn3NHNwg9jgi8baWE_4Ym"}
