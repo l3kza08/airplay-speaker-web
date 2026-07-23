@@ -23,7 +23,8 @@ test("renders the Airplay Speaker landing page", async () => {
   assert.match(html, /Instrumental break/);
   assert.match(html, /Up Next queue/);
   assert.match(html, /Full text lyrics/);
-  assert.match(html, /airplay-speaker-demo\.mp4/);
+  assert.match(html, /film-01\.mp4/);
+  assert.match(html, /Changes automatically every 15 seconds/);
   assert.match(html, /CD Quality/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/);
 });

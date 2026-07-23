@@ -97,6 +97,15 @@ const previewTracks = [
   },
 ] as const;
 
+const filmVideos = [
+  { file: "film-01.mp4", label: "Original 15-second demo" },
+  { file: "film-02.mp4", label: "Android TV capture 01" },
+  { file: "film-03.mp4", label: "Android TV capture 02" },
+  { file: "film-04.mp4", label: "Android TV capture 03" },
+  { file: "film-05.mp4", label: "Android TV capture 04" },
+  { file: "film-06.mp4", label: "Android TV capture 05" },
+] as const;
+
 function AirplayMark({ small = false }: { small?: boolean }) {
   return (
     <span className={small ? "airplay-mark small" : "airplay-mark"} aria-hidden="true">
@@ -121,9 +130,12 @@ export default function Home() {
   const [appPreviewMode, setAppPreviewMode] = useState<"waiting" | "playing">("playing");
   const [appPreviewPlaying, setAppPreviewPlaying] = useState(true);
   const [previewTrackIndex, setPreviewTrackIndex] = useState(0);
+  const [filmIndex, setFilmIndex] = useState(0);
+  const [filmPlaying, setFilmPlaying] = useState(true);
   const [scrolled, setScrolled] = useState(false);
 
   const previewTrack = previewTracks[previewTrackIndex];
+  const activeFilm = filmVideos[filmIndex];
   const previousPreviewTrack = previewTracks[(previewTrackIndex - 1 + previewTracks.length) % previewTracks.length];
   const nextPreviewTrack = previewTracks[(previewTrackIndex + 1) % previewTracks.length];
   const changePreviewTrack = (direction: number) => {
@@ -135,6 +147,10 @@ export default function Home() {
     setPreviewTrackIndex(index);
     setAppPreviewMode("playing");
     setAppPreviewPlaying(true);
+  };
+  const changeFilm = (direction: number) => {
+    setFilmIndex((index) => (index + direction + filmVideos.length) % filmVideos.length);
+    setFilmPlaying(true);
   };
 
   useEffect(() => {
@@ -163,6 +179,14 @@ export default function Home() {
       observer.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    if (!filmPlaying) return;
+    const timer = window.setTimeout(() => {
+      setFilmIndex((index) => (index + 1) % filmVideos.length);
+    }, 15_000);
+    return () => window.clearTimeout(timer);
+  }, [filmIndex, filmPlaying]);
 
   const tilt = (event: MouseEvent<HTMLElement>, amount = 6) => {
     const node = event.currentTarget;
@@ -439,25 +463,47 @@ export default function Home() {
           <div className="tv-shine" aria-hidden="true" />
           <div className="tv-topbar">
             <span className="tv-light" />
-            <span>RECORDED ON ANDROID TV · v0.14.8 · 1080P</span>
+            <span>RECORDED ON ANDROID TV · FILM {String(filmIndex + 1).padStart(2, "0")}/{String(filmVideos.length).padStart(2, "0")} · 1080P</span>
             <span className="tv-time">00:15</span>
           </div>
-          <video
-            className="demo-video"
-            autoPlay
-            muted
-            loop
-            playsInline
-            controls
-            preload="metadata"
-            poster={`${siteBasePath}/media/airplay-speaker-demo-poster.jpg`}
-          >
-            <source src={`${siteBasePath}/media/airplay-speaker-demo.mp4`} type="video/mp4" />
-          </video>
+          <div className="film-player">
+            <video
+              className="demo-video"
+              key={activeFilm.file}
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls
+              preload="metadata"
+              poster={`${siteBasePath}/media/airplay-speaker-demo-poster.jpg`}
+              onPlay={() => setFilmPlaying(true)}
+              onPause={() => setFilmPlaying(false)}
+            >
+              <source src={`${siteBasePath}/media/${activeFilm.file}`} type="video/mp4" />
+            </video>
+            <button className="film-arrow film-arrow-left" type="button" onClick={() => changeFilm(-1)} aria-label="Previous Android TV film">‹</button>
+            <button className="film-arrow film-arrow-right" type="button" onClick={() => changeFilm(1)} aria-label="Next Android TV film">›</button>
+            <div className={filmPlaying ? "film-countdown" : "film-countdown is-paused"} key={`countdown-${filmIndex}`} aria-hidden="true"><i /></div>
+          </div>
         </div>
         <div className="demo-caption" data-reveal>
-          <p>Captured from Airplay Speaker v0.14.8 · Video has no audio</p>
-          <span>Move your pointer across the screen</span>
+          <div>
+            <p>{activeFilm.label} · Changes automatically every 15 seconds · No audio</p>
+            <div className="film-dots" role="group" aria-label="Choose an Android TV film">
+              {filmVideos.map((film, index) => (
+                <button
+                  type="button"
+                  className={filmIndex === index ? "is-active" : ""}
+                  onClick={() => { setFilmIndex(index); setFilmPlaying(true); }}
+                  aria-label={`Play ${film.label}`}
+                  aria-pressed={filmIndex === index}
+                  key={film.file}
+                />
+              ))}
+            </div>
+          </div>
+          <span>Pause the film to pause rotation</span>
         </div>
       </section>
 
