@@ -490,7 +490,7 @@ export default function Home() {
           <span>Airplay Speaker</span>
         </a>
         <p>AirPlay music receiver for Android TV</p>
-        <p className="legal"><Link href="/download">Download v0.14.8</Link> · Open source under GPL-3.0 · Not affiliated with or endorsed by Apple Inc.</p>
+        <p className="legal"><Link href="/download">Download v0.14.13</Link> · Open source under GPL-3.0 · Not affiliated with or endorsed by Apple Inc.</p>
       </footer>
     </main>
   );

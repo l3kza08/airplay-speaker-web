@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 const apkUrl =
-  "https://github.com/l3kza08/Sonic-Cast/releases/download/v0.14.8/Airplay-Speaker-v0.14.8.apk";
-const releaseUrl = "https://github.com/l3kza08/Sonic-Cast/releases/tag/v0.14.8";
+  "https://github.com/l3kza08/Sonic-Cast/releases/download/v0.14.13/Airplay-Speaker-v0.14.13.apk";
+const releaseUrl = "https://github.com/l3kza08/Sonic-Cast/releases/tag/v0.14.13";
 const sourceUrl = "https://github.com/l3kza08/Sonic-Cast";
-const checksum = "8d78ab7c4ae999bd2bca792f6e1a15265a213347e0774d09a3c349d74923613a";
+const checksum = "b855208a67bdad9eaaab1101becb9ea69966bf1ae36af2de353173accc9a1a26";
 const siteBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const metadata: Metadata = {
   title: "Download Airplay Speaker for Android TV",
   description:
-    "Download Airplay Speaker v0.14.8 for Android TV, verify the APK checksum, and follow the installation guide.",
+    "Download Airplay Speaker v0.14.13 for Android TV, review what changed, verify the APK checksum, and follow the installation guide.",
   openGraph: {
     title: "Download Airplay Speaker",
     description: "AirPlay music receiver for Android TV. Download the latest APK.",
@@ -50,11 +50,11 @@ export default function DownloadPage() {
           </p>
           <a className="download-main-cta magnetic" href={apkUrl}>
             <span className="download-cta-icon" aria-hidden="true">↓</span>
-            <span><strong>Download the APK</strong><small>Airplay-Speaker-v0.14.8.apk</small></span>
+            <span><strong>Download the APK</strong><small>Airplay-Speaker-v0.14.13.apk</small></span>
           </a>
           <div className="release-meta" aria-label="Release information">
-            <span>v0.14.8</span><i />
-            <span>43.9 MB</span><i />
+            <span>v0.14.13</span><i />
+            <span>42.9 MB</span><i />
             <span>Android TV 7.0+</span>
           </div>
         </div>
@@ -69,6 +69,40 @@ export default function DownloadPage() {
           <strong>Airplay Speaker</strong>
           <small>Built for the biggest screen in your home.</small>
         </div>
+      </section>
+
+      <section className="release-highlights">
+        <div className="download-section-heading compact">
+          <p className="eyebrow"><span /> WHAT’S NEW IN v0.14.13</p>
+          <h2>A smoother view.<br />A smarter queue.</h2>
+        </div>
+
+        <div className="release-highlight-grid">
+          <article>
+            <span>01</span>
+            <h3>One continuous transition</h3>
+            <p>Hide lyrics and the current cover glides into the center while the previous and next tracks emerge around it.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Browse Up Next</h3>
+            <p>When the sender provides a DACP queue, use Left or Right to browse up to 50 tracks and press OK to play one.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Cleaner lyrics control</h3>
+            <p>The round lyrics button now hides after five seconds of inactivity and returns with the next remote input.</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>Smoother on 2 GB TVs</h3>
+            <p>Background color motion, animated artwork, image prefetching, and queue parsing were tuned for lower memory use.</p>
+          </article>
+        </div>
+
+        <a className="release-changelog-link" href={releaseUrl} target="_blank" rel="noreferrer">
+          Read the complete additions and fixes on GitHub <span aria-hidden="true">↗</span>
+        </a>
       </section>
 
       <section className="download-details">
@@ -114,7 +148,7 @@ export default function DownloadPage() {
             <span>02</span>
             <h3>Install with ADB</h3>
             <p>Enable Developer options and USB debugging on your Android TV, then run:</p>
-            <pre><code>adb connect &lt;ANDROID_TV_IP&gt;:5555{"\n"}adb install -r Airplay-Speaker-v0.14.8.apk</code></pre>
+            <pre><code>adb connect &lt;ANDROID_TV_IP&gt;:5555{"\n"}adb install -r Airplay-Speaker-v0.14.13.apk</code></pre>
           </article>
           <article className="install-card">
             <span>03</span>
@@ -127,7 +161,7 @@ export default function DownloadPage() {
           <span aria-hidden="true">!</span>
           <div>
             <strong>Development-signed APK</strong>
-            <p>If Android reports an incompatible signature, uninstall the older build first, then install v0.14.8. Uninstalling clears local app settings.</p>
+            <p>If Android reports an incompatible signature, uninstall the older build first, then install v0.14.13. Uninstalling clears local app settings.</p>
           </div>
         </aside>
 
@@ -137,7 +171,7 @@ export default function DownloadPage() {
             <h2>Give every song<br />the room it deserves.</h2>
           </div>
           <div className="download-final-actions">
-            <a className="button button-light magnetic" href={apkUrl}><span aria-hidden="true">↓</span> Download v0.14.8</a>
+            <a className="button button-light magnetic" href={apkUrl}><span aria-hidden="true">↓</span> Download v0.14.13</a>
             <a className="text-link" href={sourceUrl} target="_blank" rel="noreferrer">Browse the source <span aria-hidden="true">↗</span></a>
           </div>
         </div>
@@ -148,7 +182,7 @@ export default function DownloadPage() {
           <AirplayMark small />
           <span>Airplay Speaker</span>
         </Link>
-        <p>Version 0.14.8 · Android TV 7.0+</p>
+        <p>Version 0.14.13 · Android TV 7.0+</p>
         <p className="legal">Open source under GPL-3.0 · Not affiliated with or endorsed by Apple Inc.</p>
       </footer>
     </main>
