@@ -13,6 +13,7 @@ Official product website and APK download page for **Airplay Speaker**, an AirPl
 - Product film recorded on Android TV
 - Word-by-word lyrics demonstration
 - Dedicated APK download and installation guide
+- v0.14.13 additions and fixes shown beside the APK download
 - Responsive layouts for desktop, tablet, and mobile
 
 ## Local development
