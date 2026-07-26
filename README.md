@@ -13,7 +13,7 @@ Official product website and APK download page for **Airplay Speaker**, an AirPl
 - Six real Android TV films that rotate automatically every 15 seconds
 - Word-by-word lyrics demonstration
 - Dedicated APK download and installation guide
-- v0.14.13 additions and fixes shown beside the APK download
+- v1.0.0 additions and fixes shown beside the APK download
 - Responsive layouts for desktop, tablet, and mobile
 
 ## Local development

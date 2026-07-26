@@ -2,20 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 const apkUrl =
-  "https://github.com/l3kza08/Sonic-Cast/releases/download/v0.14.13/Airplay-Speaker-v0.14.13.apk";
-const releaseUrl = "https://github.com/l3kza08/Sonic-Cast/releases/tag/v0.14.13";
+  "https://github.com/l3kza08/Sonic-Cast/releases/download/v1.0.0/Airplay-Speaker-v1.0.0.apk";
+const releaseUrl = "https://github.com/l3kza08/Sonic-Cast/releases/tag/v1.0.0";
 const sourceUrl = "https://github.com/l3kza08/Sonic-Cast";
-const checksum = "b855208a67bdad9eaaab1101becb9ea69966bf1ae36af2de353173accc9a1a26";
+const checksum = "6da633e37fffe6e59eab8b41a4c1da3455f3a035508d52650b41c257f57a32ac";
 const siteBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const metadata: Metadata = {
   title: "Download Airplay Speaker for Android TV",
   description:
-    "Download Airplay Speaker v0.14.13 for Android TV, review what changed, verify the APK checksum, and follow the installation guide.",
+    "Download Airplay Speaker v1.0.0 for Android TV, review what changed, verify the APK checksum, and follow the installation guide.",
   openGraph: {
     title: "Download Airplay Speaker",
     description: "AirPlay music receiver for Android TV. Download the latest APK.",
-    images: [{ url: `${siteBasePath}/og-live-demo.png`, width: 1200, height: 630, alt: "Airplay Speaker multi-song Live Demo on Android TV" }],
+    images: [{ url: `${siteBasePath}/og-v1.png`, width: 1200, height: 630, alt: "Airplay Speaker 1.0 on Android TV" }],
   },
 };
 
@@ -43,18 +43,18 @@ export default function DownloadPage() {
         <div className="download-aurora aurora-one" aria-hidden="true" />
         <div className="download-aurora aurora-two" aria-hidden="true" />
         <div className="download-copy">
-          <p className="eyebrow"><span /> DOWNLOAD FOR ANDROID TV</p>
-          <h1>Your TV is ready<br />for <em>better music.</em></h1>
+          <p className="eyebrow"><span /> AIRPLAY SPEAKER 1.0</p>
+          <h1>One small app.<br /><em>A bigger room.</em></h1>
           <p className="download-lead">
             Install Airplay Speaker and turn your Android TV into a cinematic AirPlay music receiver—with CD-quality audio, living artwork, and fluid lyrics.
           </p>
           <a className="download-main-cta magnetic" href={apkUrl}>
             <span className="download-cta-icon" aria-hidden="true">↓</span>
-            <span><strong>Download the APK</strong><small>Airplay-Speaker-v0.14.13.apk</small></span>
+            <span><strong>Download the APK</strong><small>Airplay-Speaker-v1.0.0.apk</small></span>
           </a>
           <div className="release-meta" aria-label="Release information">
-            <span>v0.14.13</span><i />
-            <span>42.9 MB</span><i />
+            <span>v1.0.0</span><i />
+            <span>43 MB</span><i />
             <span>Android TV 7.0+</span>
           </div>
         </div>
@@ -73,30 +73,30 @@ export default function DownloadPage() {
 
       <section className="release-highlights">
         <div className="download-section-heading compact">
-          <p className="eyebrow"><span /> WHAT’S NEW IN v0.14.13</p>
-          <h2>A smoother view.<br />A smarter queue.</h2>
+          <p className="eyebrow"><span /> WHAT’S NEW IN v1.0.0</p>
+          <h2>Lyrics that stay<br />exactly where they belong.</h2>
         </div>
 
         <div className="release-highlight-grid">
           <article>
             <span>01</span>
-            <h3>One continuous transition</h3>
-            <p>Hide lyrics and the current cover glides into the center while the previous and next tracks emerge around it.</p>
+            <h3>Stable duet detection</h3>
+            <p>Two-sided lyrics appear only when the song confirms two vocalist roles across its timeline.</p>
           </article>
           <article>
             <span>02</span>
-            <h3>Browse Up Next</h3>
-            <p>When the sender provides a DACP queue, use Left or Right to browse up to 50 tracks and press OK to play one.</p>
+            <h3>The all-right bug is gone</h3>
+            <p>Malformed single-singer metadata can no longer push every lyric line to the right edge.</p>
           </article>
           <article>
             <span>03</span>
-            <h3>Cleaner lyrics control</h3>
-            <p>The round lyrics button now hides after five seconds of inactivity and returns with the next remote input.</p>
+            <h3>Resilient word sync</h3>
+            <p>Incomplete timing is repaired per line without replacing better word-by-word timing from another source.</p>
           </article>
           <article>
             <span>04</span>
-            <h3>Smoother on 2 GB TVs</h3>
-            <p>Background color motion, animated artwork, image prefetching, and queue parsing were tuned for lower memory use.</p>
+            <h3>Ready for the living room</h3>
+            <p>Motion artwork, album color, remote browsing, optional spatial enhancement, and low-memory tuning arrive together.</p>
           </article>
         </div>
 
@@ -148,7 +148,7 @@ export default function DownloadPage() {
             <span>02</span>
             <h3>Install with ADB</h3>
             <p>Enable Developer options and USB debugging on your Android TV, then run:</p>
-            <pre><code>adb connect &lt;ANDROID_TV_IP&gt;:5555{"\n"}adb install -r Airplay-Speaker-v0.14.13.apk</code></pre>
+            <pre><code>adb connect &lt;ANDROID_TV_IP&gt;:5555{"\n"}adb install -r Airplay-Speaker-v1.0.0.apk</code></pre>
           </article>
           <article className="install-card">
             <span>03</span>
@@ -161,7 +161,7 @@ export default function DownloadPage() {
           <span aria-hidden="true">!</span>
           <div>
             <strong>Development-signed APK</strong>
-            <p>If Android reports an incompatible signature, uninstall the older build first, then install v0.14.13. Uninstalling clears local app settings.</p>
+            <p>If Android reports an incompatible signature, uninstall the older build first, then install v1.0.0. Uninstalling clears local app settings.</p>
           </div>
         </aside>
 
@@ -171,7 +171,7 @@ export default function DownloadPage() {
             <h2>Give every song<br />the room it deserves.</h2>
           </div>
           <div className="download-final-actions">
-            <a className="button button-light magnetic" href={apkUrl}><span aria-hidden="true">↓</span> Download v0.14.13</a>
+            <a className="button button-light magnetic" href={apkUrl}><span aria-hidden="true">↓</span> Download v1.0.0</a>
             <a className="text-link" href={sourceUrl} target="_blank" rel="noreferrer">Browse the source <span aria-hidden="true">↗</span></a>
           </div>
         </div>
@@ -182,7 +182,7 @@ export default function DownloadPage() {
           <AirplayMark small />
           <span>Airplay Speaker</span>
         </Link>
-        <p>Version 0.14.13 · Android TV 7.0+</p>
+        <p>Version 1.0.0 · Android TV 7.0+</p>
         <p className="legal">Open source under GPL-3.0 · Not affiliated with or endorsed by Apple Inc.</p>
       </footer>
     </main>
