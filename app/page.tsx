@@ -16,7 +16,7 @@ const features = [
   {
     number: "02",
     title: "Lyrics that feel alive",
-    body: "Word-by-word karaoke timing, duet placement, backing vocals, and transitions that move with the song.",
+    body: "Glyph-shaped karaoke glow, independent backing vocals, stable Duet placement, and transitions that move with the sound.",
     className: "feature-card feature-lyrics",
   },
   {
@@ -211,46 +211,45 @@ export default function Home() {
   return (
     <main>
       <div className="scroll-progress" aria-hidden="true" />
-      <div className="pointer-glow" aria-hidden="true" />
+      <aside className="chapter-rail" aria-label="Page chapters">
+        <a href="#top"><span>01</span><i /></a>
+        <a href="#live-app"><span>02</span><i /></a>
+        <a href="#experience"><span>03</span><i /></a>
+        <a href="#features"><span>04</span><i /></a>
+        <a href="#setup"><span>05</span><i /></a>
+      </aside>
 
       <nav className={scrolled ? "site-nav is-scrolled" : "site-nav"} aria-label="Main navigation">
         <a className="brand" href="#top" aria-label="Airplay Speaker home">
           <AirplayMark small />
-          <span>Airplay Speaker</span>
+          <span>Airplay Speaker <sup>2.0</sup></span>
         </a>
         <div className="nav-links">
-          <a href="#live-app">Live app</a>
+          <a href="#live-app">Experience</a>
           <a href="#experience">Film</a>
-          <a href="#features">Details</a>
-          <a href="#setup">Set up</a>
+          <a href="#features">Inside</a>
         </div>
-        <Link className="nav-cta magnetic" href="/download">Download <span aria-hidden="true">↓</span></Link>
+        <Link className="nav-cta magnetic" href="/download">Get v2.0 <span aria-hidden="true">↓</span></Link>
       </nav>
 
       <section className="hero" id="top">
-        <div className="hero-grid" aria-hidden="true" />
-        <div className="hero-glow hero-glow-one" />
-        <div className="hero-glow hero-glow-two" />
-        <div className="floating-note note-one" aria-hidden="true">♪</div>
-        <div className="floating-note note-two" aria-hidden="true">♫</div>
-
         <div className="hero-copy hero-enter">
-          <p className="eyebrow"><span /> AIRPLAY RECEIVER FOR ANDROID TV</p>
-          <h1>Every song<br />deserves a <em>bigger</em> stage.</h1>
+          <p className="eyebrow"><span /> AIRPLAY SPEAKER 2.0 · ANDROID TV</p>
+          <h1>Music,<br /><em>made visible.</em></h1>
           <p className="hero-lead">
-            Turn your Android TV into a beautiful AirPlay speaker—with CD-quality audio,
-            living artwork, album-tinted ambience, and karaoke lyrics that move with every word.
+            A calm AirPlay receiver for the biggest screen in your home. Lossless ALAC,
+            living artwork, Smart Vocal Focus, and lyrics shaped around every word.
           </p>
           <div className="hero-actions">
-            <a className="button button-primary magnetic" href="#demo">
-              <span className="play-icon" aria-hidden="true">▶</span> Watch the 15-second film
-            </a>
-            <a className="button button-ghost magnetic" href="#lyrics">Try the Lyrics Lab <span aria-hidden="true">→</span></a>
+            <Link className="button button-primary magnetic" href="/download">
+              Download v2.0 <span aria-hidden="true">↓</span>
+            </Link>
+            <a className="button button-ghost magnetic" href="#live-app">Explore the app <span aria-hidden="true">↘</span></a>
           </div>
           <ul className="hero-specs" aria-label="Key specifications">
-            <li><strong>16-bit</strong><span>ALAC Audio</span></li>
-            <li><strong>44.1 kHz</strong><span>CD Quality</span></li>
-            <li><strong>60 Hz</strong><span>Lyrics Motion</span></li>
+            <li><strong>Lossless</strong><span>16-bit ALAC</span></li>
+            <li><strong>Word sync</strong><span>Up to 60 Hz</span></li>
+            <li><strong>TV first</strong><span>2 GB ready</span></li>
           </ul>
         </div>
 
@@ -276,22 +275,17 @@ export default function Home() {
           <p className="device-name">{connected ? "Midnight Drive · Nova Bloom" : "Airplay Speaker"}</p>
           <span className="interaction-hint">{connected ? "Tap to reset" : "Tap to connect"}</span>
         </button>
-      </section>
 
-      <section className="ticker" aria-label="App capabilities">
-        <div className="ticker-track">
-          <span>CD QUALITY AUDIO</span><i>✦</i><span>WORD-BY-WORD LYRICS</span><i>✦</i>
-          <span>MOTION ARTWORK</span><i>✦</i><span>BUILT FOR ANDROID TV</span><i>✦</i>
-          <span aria-hidden="true">CD QUALITY AUDIO</span><i aria-hidden="true">✦</i><span aria-hidden="true">WORD-BY-WORD LYRICS</span><i aria-hidden="true">✦</i>
-          <span aria-hidden="true">MOTION ARTWORK</span><i aria-hidden="true">✦</i><span aria-hidden="true">BUILT FOR ANDROID TV</span><i aria-hidden="true">✦</i>
-        </div>
+        <a className="scroll-cue" href="#live-app">
+          <span>Scroll to experience</span><i aria-hidden="true" />
+        </a>
       </section>
 
       <section className="app-embed section-shell" id="live-app">
         <div className="app-embed-heading" data-reveal>
           <div>
-            <p className="eyebrow"><span /> THE APP, INSIDE THE SITE</p>
-            <h2>Try the living-room<br />experience right here.</h2>
+            <p className="eyebrow"><span /> 02 · LIVE EXPERIENCE</p>
+            <h2>The app.<br />No installation needed.</h2>
           </div>
           <div className="app-view-switcher" role="group" aria-label="App screen preview">
             <button type="button" className={appPreviewMode === "playing" ? "is-active" : ""} onClick={() => setAppPreviewMode("playing")}>Now Playing</button>
@@ -326,7 +320,7 @@ export default function Home() {
                 <div className={`embedded-now-playing view-${previewTrack.view}`} key={`${previewTrackIndex}-${previewTrack.view}`} aria-live="polite">
                   {previewTrack.view === "queue" ? (
                     <div className="embedded-queue-view">
-                      <p className="queue-eyebrow">NOW PLAYING</p>
+                      <p className="queue-eyebrow">{previewTrack.album}</p>
                       <div className="embedded-queue-rail">
                         {[previousPreviewTrack, previewTrack, nextPreviewTrack].map((track, index) => {
                           const queueIndex = index === 0
@@ -339,7 +333,6 @@ export default function Home() {
                               <div className="queue-cover" aria-hidden="true"><i /><i /><i /></div>
                               <strong>{track.title}</strong>
                               <span>{track.artist}</span>
-                              <small>{index === 0 ? "PREVIOUS" : index === 1 ? "NOW PLAYING" : "UP NEXT"}</small>
                             </div>
                           );
                         })}
@@ -448,9 +441,9 @@ export default function Home() {
 
       <section className="experience section-shell" id="experience">
         <div className="section-intro" data-reveal>
-          <p className="eyebrow"><span /> NOW PLAYING, REIMAGINED</p>
-          <h2>Quiet from across the room.<br />Rich when you look closer.</h2>
-          <p>Every element is composed for a real television, keeping music at the center without a wall of controls getting in the way.</p>
+          <p className="eyebrow"><span /> 03 · ON A REAL TV</p>
+          <h2>Not a mockup.<br />Thirty seconds in the room.</h2>
+          <p>Recorded directly from Android TV. The films move automatically every fifteen seconds, or you can choose one yourself.</p>
         </div>
 
         <div
@@ -510,10 +503,10 @@ export default function Home() {
       <section className="features section-shell" id="features">
         <div className="section-heading-row" data-reveal>
           <div>
-            <p className="eyebrow"><span /> CRAFTED FOR MUSIC</p>
-            <h2>Sound, color, and lyrics.<br />One continuous experience.</h2>
+            <p className="eyebrow"><span /> 04 · INSIDE VERSION 2.0</p>
+            <h2>Only what the music needs.</h2>
           </div>
-          <p>Everything important is designed to feel fast, calm, and effortless—even on resource-limited TV hardware.</p>
+          <p>Lossless sound, stable duet placement, album-aware color, and smooth motion—tuned to stay responsive on modest TV hardware.</p>
         </div>
         <div className="feature-grid">
           {features.map((feature) => (
@@ -558,8 +551,8 @@ export default function Home() {
       <section className="lyrics-showcase" id="lyrics">
         <div className="lyrics-backdrop" />
         <div className="lyrics-meta" data-reveal>
-          <p className="eyebrow light"><span /> INTERACTIVE LYRICS LAB</p>
-          <h2>Don&apos;t just read it.<br />Feel the line arrive.</h2>
+          <p className="eyebrow light"><span /> INTERACTIVE LYRICS LAB · V2.0</p>
+          <h2>Every line<br />knows its place.</h2>
           <p>Switch between lyric behaviors to preview the glow, singer placement, and breathing break indicator used on TV.</p>
           <div className="mode-switcher" role="group" aria-label="Lyrics preview mode">
             {(["karaoke", "duet", "break"] as const).map((mode) => (
@@ -605,8 +598,8 @@ export default function Home() {
       <section className="setup section-shell" id="setup">
         <div className="section-heading-row setup-heading" data-reveal>
           <div>
-            <p className="eyebrow"><span /> SIMPLE BY DESIGN</p>
-            <h2>Three steps.<br />Then let it play.</h2>
+            <p className="eyebrow"><span /> 05 · SIMPLE BY DESIGN</p>
+            <h2>Open. Choose.<br />Listen.</h2>
           </div>
           <div className="compatibility">
             <span>Compatibility</span>
@@ -646,7 +639,7 @@ export default function Home() {
           <span>Airplay Speaker</span>
         </a>
         <p>AirPlay music receiver for Android TV</p>
-        <p className="legal"><Link href="/download">Download v0.14.13</Link> · Open source under GPL-3.0 · Not affiliated with or endorsed by Apple Inc.</p>
+        <p className="legal"><Link href="/download">Download v2.0.0</Link> · Open source under GPL-3.0 · Not affiliated with or endorsed by Apple Inc.</p>
       </footer>
     </main>
   );

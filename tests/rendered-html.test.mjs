@@ -15,9 +15,10 @@ test("renders the Airplay Speaker landing page", async () => {
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /<title>Airplay Speaker/);
-  assert.match(html, /Every song/);
+  assert.match(html, /Music,/);
+  assert.match(html, /Scroll to experience/);
   assert.match(html, /Interactive Lyrics Lab/i);
-  assert.match(html, /THE APP, INSIDE THE SITE/);
+  assert.match(html, /LIVE EXPERIENCE/);
   assert.match(html, /Karaoke lyrics/);
   assert.match(html, /Duet vocals/);
   assert.match(html, /Instrumental break/);
@@ -25,7 +26,7 @@ test("renders the Airplay Speaker landing page", async () => {
   assert.match(html, /Full text lyrics/);
   assert.match(html, /film-01\.mp4/);
   assert.match(html, /Changes automatically every 15 seconds/);
-  assert.match(html, /CD Quality/);
+  assert.match(html, /16-bit ALAC/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/);
 });
 
@@ -34,9 +35,9 @@ test("renders the APK download page", async () => {
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /Download Airplay Speaker for Android TV/);
-  assert.match(html, /Airplay-Speaker-v0\.14\.13\.apk/);
-  assert.match(html, /WHAT’S NEW IN v0\.14\.13/);
-  assert.match(html, /b855208a67bdad9eaaab1101becb9ea69966bf1ae36af2de353173accc9a1a26/);
+  assert.match(html, /Airplay-Speaker-v2\.0\.0\.apk/);
+  assert.match(html, /WHAT CHANGED SINCE v1\.0\.0/);
+  assert.match(html, /02d21fdfcab02a1b779418c47d92597059bab5d911e5675f703af10ca6c790a3/);
   assert.match(html, /Android TV 7\.0\+/);
   assert.match(html, /adb install -r/);
 });
