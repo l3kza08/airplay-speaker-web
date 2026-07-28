@@ -7,6 +7,9 @@ const releaseUrl = "https://github.com/l3kza08/Sonic-Cast/releases/tag/v2.0.0";
 const sourceUrl = "https://github.com/l3kza08/Sonic-Cast";
 const checksum = "02d21fdfcab02a1b779418c47d92597059bab5d911e5675f703af10ca6c790a3";
 const siteBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const siteUrl = siteBasePath
+  ? `https://l3kza08.github.io${siteBasePath}`
+  : "https://airplay-speaker-tv-0722.worapornkummarn.chatgpt.site";
 
 export const metadata: Metadata = {
   title: "Download Airplay Speaker for Android TV",
@@ -15,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Download Airplay Speaker",
     description: "AirPlay music receiver for Android TV. Download the latest APK.",
-    images: [{ url: `${siteBasePath}/og-v2.png`, width: 1200, height: 630, alt: "Airplay Speaker 2.0 on Android TV" }],
+    images: [{ url: `${siteUrl}/og-v2.png`, width: 1200, height: 630, alt: "Airplay Speaker 2.0 on Android TV" }],
   },
 };
 

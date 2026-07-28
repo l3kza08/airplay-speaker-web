@@ -11,6 +11,7 @@ const siteBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const siteUrl = siteBasePath
   ? `https://l3kza08.github.io${siteBasePath}`
   : "https://airplay-speaker-tv-0722.worapornkummarn.chatgpt.site";
+const socialImageUrl = `${siteUrl}/og-v2.png`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -22,13 +23,13 @@ export const metadata: Metadata = {
     description: "Music, made visible.",
     type: "website",
     locale: "en_US",
-    images: [{ url: `${siteBasePath}/og-v2.png`, width: 1200, height: 630, alt: "Airplay Speaker 2.0 on Android TV" }],
+    images: [{ url: socialImageUrl, width: 1200, height: 630, alt: "Airplay Speaker 2.0 on Android TV" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Airplay Speaker 2.0",
     description: "Music, made visible.",
-    images: [`${siteBasePath}/og-v2.png`],
+    images: [socialImageUrl],
   },
 };
 
