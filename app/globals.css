@@ -504,7 +504,7 @@ footer .legal { max-width: 420px; justify-self: end; text-align: right; line-hei
 .download-final-actions .text-link { color: rgba(255,255,255,.78); }
 .download-footer { width: min(1320px, calc(100% - 80px)); }
 
-/* Version 1.0 — restrained gallery direction */
+/* Version 2.0 — restrained gallery direction */
 :root {
   --ink: #090909;
   --paper: #f5f3ed;

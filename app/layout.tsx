@@ -14,21 +14,21 @@ const siteUrl = siteBasePath
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Airplay Speaker 1.0 — Music, made visible",
+  title: "Airplay Speaker 2.0 — Music, made visible",
   description:
-    "A minimal AirPlay music receiver for Android TV with lossless ALAC audio, motion artwork, and stable word-by-word lyrics.",
+    "A minimal AirPlay music receiver for Android TV with lossless ALAC audio, Smart Vocal Focus, motion artwork, and a rebuilt lyric engine.",
   openGraph: {
-    title: "Airplay Speaker 1.0",
+    title: "Airplay Speaker 2.0",
     description: "Music, made visible.",
     type: "website",
     locale: "en_US",
-    images: [{ url: `${siteBasePath}/og-v1.png`, width: 1200, height: 630, alt: "Airplay Speaker 1.0 on Android TV" }],
+    images: [{ url: `${siteBasePath}/og-v2.png`, width: 1200, height: 630, alt: "Airplay Speaker 2.0 on Android TV" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Airplay Speaker 1.0",
+    title: "Airplay Speaker 2.0",
     description: "Music, made visible.",
-    images: [`${siteBasePath}/og-v1.png`],
+    images: [`${siteBasePath}/og-v2.png`],
   },
 };
 

@@ -16,7 +16,7 @@ const features = [
   {
     number: "02",
     title: "Lyrics that feel alive",
-    body: "Word-by-word karaoke timing, duet placement, backing vocals, and transitions that move with the song.",
+    body: "Glyph-shaped karaoke glow, independent backing vocals, stable Duet placement, and transitions that move with the sound.",
     className: "feature-card feature-lyrics",
   },
   {
@@ -222,27 +222,27 @@ export default function Home() {
       <nav className={scrolled ? "site-nav is-scrolled" : "site-nav"} aria-label="Main navigation">
         <a className="brand" href="#top" aria-label="Airplay Speaker home">
           <AirplayMark small />
-          <span>Airplay Speaker <sup>1.0</sup></span>
+          <span>Airplay Speaker <sup>2.0</sup></span>
         </a>
         <div className="nav-links">
           <a href="#live-app">Experience</a>
           <a href="#experience">Film</a>
           <a href="#features">Inside</a>
         </div>
-        <Link className="nav-cta magnetic" href="/download">Get v1.0 <span aria-hidden="true">↓</span></Link>
+        <Link className="nav-cta magnetic" href="/download">Get v2.0 <span aria-hidden="true">↓</span></Link>
       </nav>
 
       <section className="hero" id="top">
         <div className="hero-copy hero-enter">
-          <p className="eyebrow"><span /> AIRPLAY SPEAKER 1.0 · ANDROID TV</p>
+          <p className="eyebrow"><span /> AIRPLAY SPEAKER 2.0 · ANDROID TV</p>
           <h1>Music,<br /><em>made visible.</em></h1>
           <p className="hero-lead">
             A calm AirPlay receiver for the biggest screen in your home. Lossless ALAC,
-            living artwork, and lyrics that arrive with every word.
+            living artwork, Smart Vocal Focus, and lyrics shaped around every word.
           </p>
           <div className="hero-actions">
             <Link className="button button-primary magnetic" href="/download">
-              Download v1.0 <span aria-hidden="true">↓</span>
+              Download v2.0 <span aria-hidden="true">↓</span>
             </Link>
             <a className="button button-ghost magnetic" href="#live-app">Explore the app <span aria-hidden="true">↘</span></a>
           </div>
@@ -503,7 +503,7 @@ export default function Home() {
       <section className="features section-shell" id="features">
         <div className="section-heading-row" data-reveal>
           <div>
-            <p className="eyebrow"><span /> 04 · INSIDE VERSION 1.0</p>
+            <p className="eyebrow"><span /> 04 · INSIDE VERSION 2.0</p>
             <h2>Only what the music needs.</h2>
           </div>
           <p>Lossless sound, stable duet placement, album-aware color, and smooth motion—tuned to stay responsive on modest TV hardware.</p>
@@ -551,7 +551,7 @@ export default function Home() {
       <section className="lyrics-showcase" id="lyrics">
         <div className="lyrics-backdrop" />
         <div className="lyrics-meta" data-reveal>
-          <p className="eyebrow light"><span /> INTERACTIVE LYRICS LAB · V1.0</p>
+          <p className="eyebrow light"><span /> INTERACTIVE LYRICS LAB · V2.0</p>
           <h2>Every line<br />knows its place.</h2>
           <p>Switch between lyric behaviors to preview the glow, singer placement, and breathing break indicator used on TV.</p>
           <div className="mode-switcher" role="group" aria-label="Lyrics preview mode">
@@ -639,7 +639,7 @@ export default function Home() {
           <span>Airplay Speaker</span>
         </a>
         <p>AirPlay music receiver for Android TV</p>
-        <p className="legal"><Link href="/download">Download v1.0.0</Link> · Open source under GPL-3.0 · Not affiliated with or endorsed by Apple Inc.</p>
+        <p className="legal"><Link href="/download">Download v2.0.0</Link> · Open source under GPL-3.0 · Not affiliated with or endorsed by Apple Inc.</p>
       </footer>
     </main>
   );
