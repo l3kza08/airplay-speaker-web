@@ -9,11 +9,11 @@ Official product website and APK download page for **Airplay Speaker**, an AirPl
 
 ## Features
 
-- Interactive five-song Android TV preview with karaoke, duet, instrumental, queue, and plain-lyrics screens
-- Six real Android TV films that rotate automatically every 15 seconds
-- Word-by-word lyrics demonstration
+- Cinematic v3.0 campaign page built around a real 30-second Android TV capture
+- Interactive word, Duet, and instrumental lyric demonstration
+- Full-screen motion artwork, liquid-glass, and experimental AI karaoke chapters
 - Dedicated APK download and installation guide
-- v2.5.0 additions and fixes compared directly with the previous v2.0.0 GitHub release
+- v3.0.0 additions and fixes compared directly with the previous v2.5.0 GitHub release
 - Responsive layouts for desktop, tablet, and mobile
 
 ## Local development
