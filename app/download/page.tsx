@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 const apkUrl =
-  "https://github.com/l3kza08/Sonic-Cast/releases/download/v2.0.0/Airplay-Speaker-v2.0.0.apk";
-const releaseUrl = "https://github.com/l3kza08/Sonic-Cast/releases/tag/v2.0.0";
-const sourceUrl = "https://github.com/l3kza08/Sonic-Cast";
-const checksum = "02d21fdfcab02a1b779418c47d92597059bab5d911e5675f703af10ca6c790a3";
+  "https://github.com/l3kza08/Airplay-Speaker/releases/download/v2.5.0/Airplay-Speaker-v2.5.0.apk";
+const releaseUrl = "https://github.com/l3kza08/Airplay-Speaker/releases/tag/v2.5.0";
+const sourceUrl = "https://github.com/l3kza08/Airplay-Speaker";
+const checksum = "a8d8e06d69a2b2fbb71b4b9ed406011a16275abe45bda8d651d8870d949b809b";
 const siteBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const siteUrl = siteBasePath
   ? `https://l3kza08.github.io${siteBasePath}`
@@ -14,11 +14,11 @@ const siteUrl = siteBasePath
 export const metadata: Metadata = {
   title: "Download Airplay Speaker for Android TV",
   description:
-    "Download Airplay Speaker v2.0.0 for Android TV, review every change since v1.0.0, verify the APK checksum, and follow the installation guide.",
+    "Download Airplay Speaker v2.5.0 for Android TV, review every change since v2.0.0, verify the APK checksum, and follow the installation guide.",
   openGraph: {
     title: "Download Airplay Speaker",
     description: "AirPlay music receiver for Android TV. Download the latest APK.",
-    images: [{ url: `${siteUrl}/og-v2.png`, width: 1200, height: 630, alt: "Airplay Speaker 2.0 on Android TV" }],
+    images: [{ url: `${siteUrl}/og-v2-5.png`, width: 1200, height: 630, alt: "Airplay Speaker 2.5 on Android TV" }],
   },
 };
 
@@ -46,18 +46,18 @@ export default function DownloadPage() {
         <div className="download-aurora aurora-one" aria-hidden="true" />
         <div className="download-aurora aurora-two" aria-hidden="true" />
         <div className="download-copy">
-          <p className="eyebrow"><span /> AIRPLAY SPEAKER 2.0</p>
+          <p className="eyebrow"><span /> AIRPLAY SPEAKER 2.5</p>
           <h1>One small app.<br /><em>A bigger room.</em></h1>
           <p className="download-lead">
             Turn your Android TV into a cinematic AirPlay music receiver—with CD-quality audio, living artwork, Smart Vocal Focus, and a rebuilt lyric engine.
           </p>
           <a className="download-main-cta magnetic" href={apkUrl}>
             <span className="download-cta-icon" aria-hidden="true">↓</span>
-            <span><strong>Download the APK</strong><small>Airplay-Speaker-v2.0.0.apk</small></span>
+            <span><strong>Download the APK</strong><small>Airplay-Speaker-v2.5.0.apk</small></span>
           </a>
           <div className="release-meta" aria-label="Release information">
-            <span>v2.0.0</span><i />
-            <span>43 MB</span><i />
+            <span>v2.5.0</span><i />
+            <span>43.0 MiB</span><i />
             <span>Android TV 7.0+</span>
           </div>
         </div>
@@ -76,30 +76,30 @@ export default function DownloadPage() {
 
       <section className="release-highlights">
         <div className="download-section-heading compact">
-          <p className="eyebrow"><span /> WHAT CHANGED SINCE v1.0.0</p>
-          <h2>A new lyric engine.<br />A more musical screen.</h2>
+          <p className="eyebrow"><span /> WHAT CHANGED SINCE v2.0.0</p>
+          <h2>More accurate lyrics.<br />A screen that hears the music.</h2>
         </div>
 
         <div className="release-highlight-grid">
           <article>
             <span>01</span>
-            <h3>Glyph-shaped karaoke aura</h3>
-            <p>The highlight now follows the actual letter shape, with sustained words breathing up to 14% without shaking the line.</p>
+            <h3>Audio-reactive presentation</h3>
+            <p>The equalizer now follows decoded PCM audio while the centered song title remains stable—even when the title is long.</p>
           </article>
           <article>
             <span>02</span>
-            <h3>Independent vocal timelines</h3>
-            <p>Main and backing vocals keep separate Apple timing, even when both singers overlap on the same visual row.</p>
+            <h3>Honest lyric timing</h3>
+            <p>Word animation is used only when word timing exists, while expanded Apple catalogue matching finds more songs and safely retries alternate editions.</p>
           </article>
           <article>
             <span>03</span>
-            <h3>Karaoke Mode</h3>
-            <p>Smart Vocal Focus adds adjustable real-time lead-vocal reduction tuned for low-memory Android TV hardware.</p>
+            <h3>Multilingual typography</h3>
+            <p>Thai and other scripts keep natural shaping and spacing, with more reliable backing-vocal and Duet placement.</p>
           </article>
           <article>
             <span>04</span>
-            <h3>Sound-aligned and 2 GB ready</h3>
-            <p>Queued-audio compensation, bounded caches, off-thread parsing, and smoother motion artwork reduce lag and stalls.</p>
+            <h3>Smoother on 2 GB TVs</h3>
+            <p>Lyric transitions, karaoke highlights, artwork color, and audio metering are tuned to reduce stalls and visual jitter.</p>
           </article>
         </div>
 
@@ -151,7 +151,7 @@ export default function DownloadPage() {
             <span>02</span>
             <h3>Install with ADB</h3>
             <p>Enable Developer options and USB debugging on your Android TV, then run:</p>
-            <pre><code>adb connect &lt;ANDROID_TV_IP&gt;:5555{"\n"}adb install -r Airplay-Speaker-v2.0.0.apk</code></pre>
+            <pre><code>adb connect &lt;ANDROID_TV_IP&gt;:5555{"\n"}adb install Airplay-Speaker-v2.5.0.apk</code></pre>
           </article>
           <article className="install-card">
             <span>03</span>
@@ -164,7 +164,7 @@ export default function DownloadPage() {
           <span aria-hidden="true">!</span>
           <div>
             <strong>Development-signed APK</strong>
-            <p>If Android reports an incompatible signature, uninstall the older build first, then install v2.0.0. Uninstalling clears local app settings.</p>
+            <p>Version 2.5 uses the new Airplay Speaker app identity. After confirming it opens correctly, remove the older launcher entry from TV settings. Removing an app clears its local settings.</p>
           </div>
         </aside>
 
@@ -174,7 +174,7 @@ export default function DownloadPage() {
             <h2>Give every song<br />the room it deserves.</h2>
           </div>
           <div className="download-final-actions">
-            <a className="button button-light magnetic" href={apkUrl}><span aria-hidden="true">↓</span> Download v2.0.0</a>
+            <a className="button button-light magnetic" href={apkUrl}><span aria-hidden="true">↓</span> Download v2.5.0</a>
             <a className="text-link" href={sourceUrl} target="_blank" rel="noreferrer">Browse the source <span aria-hidden="true">↗</span></a>
           </div>
         </div>
@@ -185,7 +185,7 @@ export default function DownloadPage() {
           <AirplayMark small />
           <span>Airplay Speaker</span>
         </Link>
-        <p>Version 2.0.0 · Android TV 7.0+</p>
+        <p>Version 2.5.0 · Android TV 7.0+</p>
         <p className="legal">Open source under GPL-3.0 · Not affiliated with or endorsed by Apple Inc.</p>
       </footer>
     </main>
