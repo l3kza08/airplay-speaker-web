@@ -13,7 +13,7 @@ Official product website and APK download page for **Airplay Speaker**, an AirPl
 - Six real Android TV films that rotate automatically every 15 seconds
 - Word-by-word lyrics demonstration
 - Dedicated APK download and installation guide
-- v2.0.0 additions and fixes compared directly with the previous v1.0.0 GitHub release
+- v2.5.0 additions and fixes compared directly with the previous v2.0.0 GitHub release
 - Responsive layouts for desktop, tablet, and mobile
 
 ## Local development
@@ -44,7 +44,7 @@ Build the GitHub Pages version with:
 GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/airplay-speaker-web npm run build:pages
 ```
 
-The Android TV application source and APK releases are available in the [Sonic-Cast repository](https://github.com/l3kza08/Sonic-Cast).
+The Android TV application source and APK releases are available in the [Airplay Speaker repository](https://github.com/l3kza08/Airplay-Speaker).
 
 ## License
 
