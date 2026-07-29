@@ -37,7 +37,7 @@ test("renders the APK download page", async () => {
   assert.match(html, /Download Airplay Speaker for Android TV/);
   assert.match(html, /Airplay-Speaker-v2\.5\.0\.apk/);
   assert.match(html, /WHAT CHANGED SINCE v2\.0\.0/);
-  assert.match(html, /a8d8e06d69a2b2fbb71b4b9ed406011a16275abe45bda8d651d8870d949b809b/);
+  assert.match(html, /2bb761ed115652a9dfce6b9646c6b016baf6abc69e49ffeff39c44dbd7750424/);
   assert.match(html, /Android TV 7\.0\+/);
   assert.match(html, /adb install Airplay-Speaker-v2\.5\.0\.apk/);
 });

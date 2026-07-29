@@ -5,7 +5,7 @@ const apkUrl =
   "https://github.com/l3kza08/Airplay-Speaker/releases/download/v2.5.0/Airplay-Speaker-v2.5.0.apk";
 const releaseUrl = "https://github.com/l3kza08/Airplay-Speaker/releases/tag/v2.5.0";
 const sourceUrl = "https://github.com/l3kza08/Airplay-Speaker";
-const checksum = "a8d8e06d69a2b2fbb71b4b9ed406011a16275abe45bda8d651d8870d949b809b";
+const checksum = "2bb761ed115652a9dfce6b9646c6b016baf6abc69e49ffeff39c44dbd7750424";
 const siteBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const siteUrl = siteBasePath
   ? `https://l3kza08.github.io${siteBasePath}`
@@ -57,7 +57,7 @@ export default function DownloadPage() {
           </a>
           <div className="release-meta" aria-label="Release information">
             <span>v2.5.0</span><i />
-            <span>43.0 MiB</span><i />
+            <span>44.1 MiB</span><i />
             <span>Android TV 7.0+</span>
           </div>
         </div>
