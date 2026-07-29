@@ -1,6 +1,6 @@
 {
   "name": "airplay-speaker-site",
-  "version": "2.5.0",
+  "version": "3.0.0",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
